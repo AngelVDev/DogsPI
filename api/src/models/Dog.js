@@ -9,19 +9,20 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
     },
     height: {
       type: DataTypes.STRING,
       allowNull: true,
     },
     weight: {
-      types: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     life_span: {
-      types: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: true,
     },
   });
