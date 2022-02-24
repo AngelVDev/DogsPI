@@ -26,34 +26,40 @@ const API = async () => {
     return console.log("No wei");
   }
 };
-const DBdogs = async (req, res) => {
+router.get("/dogs", async (req, res) => {
   let Doge = await API();
-  let { name } = await req.query;
+  let { name } = req.query;
   try {
     let full = await Dog.findAll({
       include: {
         model: Temperament,
       },
     });
+    console.log(full);
     if (!full.length) {
       await Dog.bulkCreate(Doge);
     }
   } catch (error) {
-    console.log("Error acá, papu =>", error);
+    console.log({ msg: error });
   }
   if (name) {
     let DogName = await Dog.findAll({
       where: {
         name: {
-          [Sequelize.Op.iLike]: `%${name.toLowerCase()}%`,
+          [Op.iLike]: `%${name.toLowerCase()}%`,
         },
       },
     });
     DogName.length
       ? res.status(200).send(DogName)
       : res.status(404).send("Can't find dog");
+  } else {
+    let full = await Dog.findAll({
+      include: { model: Temperament },
+    });
+    res.status(200).send(full);
   }
-};
+});
 
 const DogeID = async (req, res) => {
   const { id } = req.params;
@@ -66,7 +72,6 @@ const DogeID = async (req, res) => {
   else return res.status(404).send("No doge");
 };
 
-router.get("/dogs", DBdogs);
 router.get("/dogs/:id", DogeID);
 
 module.exports = router;
