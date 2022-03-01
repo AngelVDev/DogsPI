@@ -26,9 +26,9 @@ const API = async (req, res) => {
         image: dog.image.url,
       };
     });
-    return Doge;
+    return res.json(Doge);
   } catch (error) {
-    return console.log("No wei");
+    return console.log(error);
   }
 };
 router.get("/dogs", async (req, res) => {
@@ -47,7 +47,7 @@ router.get("/dogs", async (req, res) => {
       //pasamos toda la ruta a la base de datos
     }
   } catch (error) {
-    console.log({ msg: error });
+    console.log("No hay nada, papu");
   }
   if (name) {
     let DogName = await Dog.findAll({
@@ -101,6 +101,7 @@ const createFido = async (req, res) => {
     console.log(error);
   }
 };
+router.get("/pepo", API);
 router.get("/dogs/:id", DogeID);
 router.post("/dogs", createFido);
 
