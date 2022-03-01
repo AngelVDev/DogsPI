@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { Dog, Temperament } = require("../db");
-const { Op } = require("sequelize");
+const { Op, UUIDV4 } = require("sequelize");
 const router = Router();
 const axios = require("axios");
 
@@ -26,7 +26,7 @@ const API = async (req, res) => {
         image: dog.image.url,
       };
     });
-    return res.json(Doge);
+    return Doge;
   } catch (error) {
     return console.log(error);
   }
@@ -37,34 +37,34 @@ router.get("/dogs", async (req, res) => {
   //pasamos el query
   let { name } = req.query;
   try {
-    let full = await Dog.findAll({
-      include: {
-        model: Temperament,
-      },
-    });
+    let full = await Dog.findAll({ include: { model: Temperament } });
     if (!full.length) {
       await Dog.bulkCreate(Doge);
       //pasamos toda la ruta a la base de datos
     }
   } catch (error) {
-    console.log("No hay nada, papu");
+    res.send(error);
   }
-  if (name) {
-    let DogName = await Dog.findAll({
-      where: {
-        name: {
-          [Op.iLike]: `%${name.toLowerCase()}%`,
+  try {
+    if (name) {
+      let DogName = await Dog.findAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${name.toLowerCase()}%`,
+          },
         },
-      },
-    });
-    DogName.length
-      ? res.status(200).send(DogName)
-      : res.status(404).send("Can't find dog");
-  } else {
-    let full = await Dog.findAll({
-      include: { model: Temperament },
-    });
-    res.status(200).send(full);
+      });
+      DogName.length
+        ? res.status(200).send(DogName)
+        : res.status(404).send("Can't find dog");
+    } else {
+      let full = await Dog.findAll({
+        include: { model: Temperament },
+      });
+      res.status(200).send(full);
+    }
+  } catch (error) {
+    console.log(error, "El error más IMPRUDENTE");
   }
 });
 
@@ -76,7 +76,7 @@ const DogeID = async (req, res) => {
     },
   });
   if (dog) return res.status(200).send(dog);
-  else return res.status(404).send("No doge");
+  else return res.status(404).send("No such doge-ID");
 };
 const createFido = async (req, res) => {
   let { name, hmin, hmax, weMi, weMa, lifespan, image, temperament } = req.body;
@@ -101,7 +101,7 @@ const createFido = async (req, res) => {
     console.log(error);
   }
 };
-router.get("/pepo", API);
+// router.get("/pepo", API);
 router.get("/dogs/:id", DogeID);
 router.post("/dogs", createFido);
 
