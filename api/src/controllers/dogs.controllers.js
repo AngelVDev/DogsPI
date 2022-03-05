@@ -8,7 +8,7 @@ const axios = require("axios");
 
 const API = async (req, res) => {
   try {
-    const URL = await axios.get(`https://api.thedogapi.com/v1/breeds/`);
+    const URL = await axios.get("https://api.thedogapi.com/v1/breeds/");
     const Doge = await URL.data.map((dog) => {
       return {
         name: dog.name,
