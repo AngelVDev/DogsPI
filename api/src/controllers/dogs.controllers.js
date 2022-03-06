@@ -68,16 +68,6 @@ router.get("/dogs", async (req, res) => {
   }
 });
 
-const DogeID = async (req, res) => {
-  const { id } = req.params;
-  let dog = await Dog.findByPk(id, {
-    include: {
-      model: Temperament,
-    },
-  });
-  if (dog) return res.status(200).send(dog);
-  else return res.status(404).send("No such doge-ID");
-};
 const createFido = async (req, res) => {
   let { name, hmin, hmax, weMi, weMa, lifespan, image, temperament } = req.body;
   try {
@@ -101,7 +91,22 @@ const createFido = async (req, res) => {
     console.log(error);
   }
 };
-// router.get("/pepo", API);
+
+const DogeID = async (req, res) => {
+  let { id } = req.params;
+  try {
+    let doge = await Dog.findByPk(id, {
+      include: [Temperament],
+    });
+    if (doge) {
+      res.json(doge);
+    } else {
+      res.status(404).json("NOT A DOGE-ID");
+    }
+  } catch (err) {
+    console.log({ msg: err });
+  }
+};
 router.get("/dogs/:id", DogeID);
 router.post("/dogs", createFido);
 

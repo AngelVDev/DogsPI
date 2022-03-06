@@ -1,5 +1,7 @@
 const initialState = {
   dogs: [],
+  dogsDetail: {},
+  loadedPichicho: [],
 };
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -7,6 +9,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         dogs: action.payload,
+      };
+    case "GET_DETAILS":
+      return {
+        ...state,
+        dogsDetail: action.payload,
       };
     default:
       return state;
