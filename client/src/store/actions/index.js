@@ -13,12 +13,9 @@ export function getDogs() {
   };
 }
 export function getDogDetail(id) {
-  return function (dispatch) {
-    return axios
-      .get(`${URL}dogs/${id}`)
-      .then((response) => response.data)
-      .then((json) => {
-        dispatch({ type: "GET_DETAILS", payload: json });
-      });
+  return async function (dispatch) {
+    const response = await axios.get(`/dogs/${id}`);
+    const json = response.data;
+    dispatch({ type: "GET_DETAILS", payload: json });
   };
 }
