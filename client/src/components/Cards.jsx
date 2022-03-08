@@ -1,23 +1,33 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Card({ name, image, temperament, weight }) {
+export default function Card({ name, image, temperament, weMi, weMa }) {
   return (
     <CARD>
-      <h1>{name}</h1>
-      <h5>{temperament}</h5>
-      <h5>{weight}</h5>
-      <img src={image} alt="Not a dog" />
+      <h2>{name}</h2>
+      <PHOTO src={image} alt="Not a dog" />
+      <div>
+        <h5>{temperament}</h5>
+        <h5>{weMi}</h5>
+        <h5>{weMa}</h5>
+      </div>
     </CARD>
   );
 }
 export const CARD = styled.div`
-  width: 200px;
-  height: 250px;
-  background: #07182e;
-  border-radius: 5px;
-  text-align: center;
-  color: #f0f0f0;
-  font-family: inherit;
-  z-index: 1;
+  width: 15rem;
+  height: 20rem;
+  border: 2px outset red;
+  display: subgrid;
+  margin-top: 4rem;
+`;
+export const PHOTO = styled.img`
+  max-width: 70%;
+  height: auto;
+  object-fit: contain;
+`;
+export const H2 = styled.h2`
+  color: #fff;
+  font-weight: 300;
+  font-size: 1rem;
 `;

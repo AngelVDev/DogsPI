@@ -14,8 +14,12 @@ export function getDogs() {
 }
 export function getDogDetail(id) {
   return async function (dispatch) {
-    const response = await axios.get(`/dogs/${id}`);
-    const json = response.data;
-    dispatch({ type: "GET_DETAILS", payload: json });
+    try {
+      const response = await axios.get(`/dogs/${id}`);
+      let json = response.data;
+      dispatch({ type: "GET_DETAILS", payload: json });
+    } catch (err) {
+      console.log(err);
+    }
   };
 }

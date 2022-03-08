@@ -9,10 +9,10 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Switch>
-          <Route exact path="/" component={Landing}></Route>
-          <Route exact path="/home" component={Home}></Route>
-          <Route exact path="/dogs/:id" component={Detail}></Route>
-          <Route exact path="/create" component={Creator}></Route>
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/dogs/:id" component={Detail} />
+          <Route exact path="/create" component={Creator} />
         </Switch>
       </div>
     </BrowserRouter>

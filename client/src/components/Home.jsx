@@ -36,20 +36,20 @@ export default function Home() {
         <select name="By temperament" id="Temps">
           <option value="TEMP"></option>
         </select>
-        {allDogs?.map((d) => {
+        {allDogs.map((d) => {
           return (
-            <>
+            <div>
               <Link to={"/dogs/" + d.id}>
                 <Card
-                  name={d.name}
                   image={d.image}
+                  name={d.name}
                   temperament={d.temperament}
                   weightmin={d.weMi}
                   weightmax={d.weMa}
                   key={d.id}
                 />
               </Link>
-            </>
+            </div>
           );
         })}
       </div>
