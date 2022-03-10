@@ -11,8 +11,10 @@ const API = async (req, res) => {
     if (item[0] == " ") {
       return item.split("");
     }
+
     return item;
   });
+  console.log(TempsU);
   const TempsW = await TempsU.map((item) => {
     if (Array.isArray(item)) {
       item.shift();
@@ -20,6 +22,7 @@ const API = async (req, res) => {
     }
     return item;
   });
+  console.log(TempsW);
   await TempsW.forEach((element) => {
     if (element != "") {
       Temperament.findOrCreate({

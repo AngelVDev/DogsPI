@@ -22,51 +22,53 @@ const API = async (req, res) => {
           ? dog.weight.metric.split(" - ")[1]
           : "39",
         lifespan: dog.life_span,
-        temperament: dog.temperament ? dog.temperament : null,
+        temperament: dog.temperament.map((temp) => {
+          return temp.name;
+        }),
         image: dog.image.url,
       };
     });
-    return Doge;
+    return res.send(Doge);
   } catch (error) {
     return console.log(error);
   }
 };
-router.get("/dogs", async (req, res) => {
-  let Doge = await API();
-  //esperamos la api
-  //pasamos el query
-  let { name } = req.query;
-  try {
-    let full = await Dog.findAll({ include: { model: Temperament } });
-    if (!full.length) {
-      await Dog.bulkCreate(Doge);
-      //pasamos toda la ruta a la base de datos
-    }
-  } catch (error) {
-    res.send(error);
-  }
-  try {
-    if (name) {
-      let DogName = await Dog.findAll({
-        where: {
-          name: {
-            [Op.iLike]: `%${name.toLowerCase()}%`,
-          },
-        },
-      });
-      DogName.length
-        ? res.status(200).send(DogName)
-        : res.status(404).send("Can't find dog");
-    } else {
-      let full = await Dog.findAll({
-        include: { model: Temperament },
-      });
-      res.status(200).send(full);
-    }
-  } catch (error) {
-    console.log(error, "El error más IMPRUDENTE");
-  }
-});
+// router.get("/dogs", async (req, res) => {
+//   let Doge = await API();
+//   //esperamos la api
+//   //pasamos el query
+//   let { name } = req.query;
+//   try {
+//     let full = await Dog.findAll({ include: { model: Temperament } });
+//     if (!full.length) {
+//       await Dog.bulkCreate(Doge);
+//       //pasamos toda la ruta a la base de datos
+//     }
+//   } catch (error) {
+//     res.send(error);
+//   }
+//   try {
+//     if (name) {
+//       let DogName = await Dog.findAll({
+//         where: {
+//           name: {
+//             [Op.iLike]: `%${name.toLowerCase()}%`,
+//           },
+//         },
+//       });
+//       DogName.length
+//         ? res.status(200).send(DogName)
+//         : res.status(404).send("Can't find dog");
+//     } else {
+//       let full = await Dog.findAll({
+//         include: { model: Temperament },
+//       });
+//       res.status(200).send(full);
+//     }
+//   } catch (error) {
+//     console.log(error, "El error más IMPRUDENTE");
+//   }
+// });
 
 const createFido = async (req, res) => {
   let { name, hmin, hmax, weMi, weMa, lifespan, image, temperament } = req.body;
@@ -107,6 +109,7 @@ const DogeID = async (req, res) => {
     console.log({ msg: err });
   }
 };
+router.get("/dogs/", API);
 router.get("/dogs/:id", DogeID);
 router.post("/dogs", createFido);
 
