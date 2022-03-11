@@ -13,72 +13,72 @@ const API = async (req, res) => {
       return {
         name: dog.name,
         id: dog.id,
-        hmin: dog.height.metric.split("-")[0],
-        hmax: dog.height.metric.split("-")[1]
-          ? dog.height.metric.split(" - ")[1]
-          : Math.round(dog.height.metric.split(" - ")[0] * 1.1),
-        weMi: dog.weight.metric.split("-")[0],
-        weMa: dog.weight.metric.split("-")[1]
-          ? dog.weight.metric.split(" - ")[1]
-          : "39",
+        height: dog.height.metric,
+        // .split("-")[0],
+        // hmax: dog.height.metric,
+        // .split("-")[1]
+        //   ? dog.height.metric.split(" - ")[1]
+        //   : Math.round(dog.height.metric.split(" - ")[0] * 1.1),
+        weight: dog.weight.metric,
+        // .split("-")[0],
+        // weMa: dog.weight.metric,
+        // .split("-")[1]
+        //   ? dog.weight.metric.split(" - ")[1]
+        //   : "39",
         lifespan: dog.life_span,
-        temperament: dog.temperament.map((temp) => {
-          return temp.name;
-        }),
+        temperament: dog.temperament,
         image: dog.image.url,
       };
     });
-    return res.send(Doge);
+    return Doge;
   } catch (error) {
     return console.log(error);
   }
 };
-// router.get("/dogs", async (req, res) => {
-//   let Doge = await API();
-//   //esperamos la api
-//   //pasamos el query
-//   let { name } = req.query;
-//   try {
-//     let full = await Dog.findAll({ include: { model: Temperament } });
-//     if (!full.length) {
-//       await Dog.bulkCreate(Doge);
-//       //pasamos toda la ruta a la base de datos
-//     }
-//   } catch (error) {
-//     res.send(error);
-//   }
-//   try {
-//     if (name) {
-//       let DogName = await Dog.findAll({
-//         where: {
-//           name: {
-//             [Op.iLike]: `%${name.toLowerCase()}%`,
-//           },
-//         },
-//       });
-//       DogName.length
-//         ? res.status(200).send(DogName)
-//         : res.status(404).send("Can't find dog");
-//     } else {
-//       let full = await Dog.findAll({
-//         include: { model: Temperament },
-//       });
-//       res.status(200).send(full);
-//     }
-//   } catch (error) {
-//     console.log(error, "El error más IMPRUDENTE");
-//   }
-// });
+router.get("/dogs", async (req, res) => {
+  let Doge = await API();
+  //esperamos la api
+  //pasamos el query
+  let { name } = req.query;
+  try {
+    let full = await Dog.findAll({ include: { model: Temperament } });
+    if (!full.length) {
+      await Dog.bulkCreate(Doge);
+      //pasamos toda la ruta a la base de datos
+    }
+  } catch (error) {
+    res.send(error);
+  }
+  try {
+    if (name) {
+      let DogName = await Dog.findAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${name.toLowerCase()}%`,
+          },
+        },
+      });
+      DogName.length
+        ? res.status(200).send(DogName)
+        : res.status(404).send("Can't find dog");
+    } else {
+      let full = await Dog.findAll({
+        include: { model: Temperament },
+      });
+      res.status(200).send(full);
+    }
+  } catch (error) {
+    console.log(error, "El error más IMPRUDENTE");
+  }
+});
 
 const createFido = async (req, res) => {
-  let { name, hmin, hmax, weMi, weMa, lifespan, image, temperament } = req.body;
+  let { name, height, weight, lifespan, image, temperament } = req.body;
   try {
     let createdDoge = await Dog.create({
       name,
-      hmin,
-      hmax,
-      weMi,
-      weMa,
+      height,
+      weight,
       lifespan: lifespan + " years",
       image,
     });
