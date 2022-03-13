@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import Card from "./Cards";
 import SearchBar from "./SearchBar";
 
-export default function Home() {
+function Home() {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs);
+  const [dogs, setDogs] = useState({});
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     dispatch(getDogs());
@@ -18,6 +20,11 @@ export default function Home() {
     event.preventDefault();
     dispatch(getDogs());
   }
+  const onChangePage = (next) => {
+    if (!dogs.previous && page + next <= 0) return;
+    if (!dogs.next && page + next >= 9) return;
+    setPage(page + next);
+  };
   return (
     <div>
       <button>
@@ -44,8 +51,7 @@ export default function Home() {
                   image={d.image}
                   name={d.name}
                   temperament={d.temperament}
-                  weightmin={d.weMi}
-                  weightmax={d.weMa}
+                  weight={d.weight}
                   key={d.id}
                 />
               </Link>
@@ -53,6 +59,12 @@ export default function Home() {
           );
         })}
       </div>
+      ;
+      <section>
+        <button onClick={() => onChangePage(-1)}>Prev</button>| {page} |
+        <button onClick={() => onChangePage(1)}>Next</button>
+      </section>
     </div>
   );
 }
+export default Home;

@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
     "dog",
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true,
       },
@@ -19,10 +19,26 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      // Minheight: {
+      //   type: DataTypes.INTEGER,
+      //   // allowNull: false,
+      // },
+      // Maxheight: {
+      //   type: DataTypes.INTEGER,
+      //   // allowNull: false,
+      // },
       weight: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      // Minweight: {
+      //   type: DataTypes.INTEGER,
+      //   // allowNull: false,
+      // },
+      // Maxweight: {
+      //   type: DataTypes.INTEGER,
+      //   // allowNull: false,
+      // },
       lifespan: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -30,6 +46,9 @@ module.exports = (sequelize) => {
       image: {
         type: DataTypes.STRING,
         allowNull: true,
+      },
+      temperament: {
+        type: DataTypes.STRING,
       },
       createdInDb: {
         type: DataTypes.BOOLEAN,

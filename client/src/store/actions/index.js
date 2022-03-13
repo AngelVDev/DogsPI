@@ -15,7 +15,7 @@ export function getDogs() {
 export function getDogDetail(id) {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`/dogs/${id}`);
+      const response = await axios.get(URL + "dogs/" + id);
       let json = response.data;
       dispatch({ type: "GET_DETAILS", payload: json });
     } catch (err) {
