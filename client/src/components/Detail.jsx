@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import { getDogDetail } from "../store/actions";
 
 function DogDetail({ match }) {
@@ -22,7 +23,7 @@ function DogDetail({ match }) {
   //   ? height.split(" - ")[1]
   //   : Math.round(height.split(" - ")[0] * 1.1);
   return (
-    <div>
+    <DetailedCard>
       <h1>Detailed Info</h1>
       <h2>{Details.name}</h2>
       <img src={Details.img} alt="Pichicho" />
@@ -39,7 +40,19 @@ function DogDetail({ match }) {
           ))}
         </p>
       </div>
-    </div>
+    </DetailedCard>
   );
 }
 export default DogDetail;
+const DetailedCard = styled.div`
+  background-color: rgba(28, 27, 27, 0.56);
+  text-align: center;
+  display: block;
+  align-content: center;
+  padding-top: 2rem;
+  margin-left: 4.5vw;
+  height: 90vh;
+  width: 90vw;
+  box-shadow: 0px 1px 18px 5px rgba(121, 255, 244, 0.76),
+    0px 1px 5px 4px rgba(121, 255, 185, 0.85) inset;
+`;

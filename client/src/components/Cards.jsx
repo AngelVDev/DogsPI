@@ -17,7 +17,7 @@ export default function Card({ name, image, temperament, weight }) {
 }
 export const CARD = styled.div`
   /* display: grid; */
-  width: 15rem;
+  width: 15vw;
   height: 20rem;
   border: 2px outset red;
   margin-top: 4rem;
