@@ -9,13 +9,14 @@ export default function Card({ name, image, temperament, weight }) {
         <PHOTO src={image} alt="Not a dog" />
       </div>
       <div>
-        <h3>Temperaments:{temperament}</h3>
-        <h3>Weight: {weight}</h3>
+        <h5>Standard weight: {weight} Kgs</h5>
+        <h5>Usual temperaments:{temperament}</h5>
       </div>
     </CARD>
   );
 }
 export const CARD = styled.div`
+  /* display: grid; */
   width: 15rem;
   height: 20rem;
   border: 2px outset red;
@@ -25,4 +26,10 @@ export const PHOTO = styled.img`
   max-width: 70%;
   height: auto;
   object-fit: contain;
+`;
+export const HIDD = styled.div`
+diplay: hidden;
+&hover(
+  display:
+)
 `;

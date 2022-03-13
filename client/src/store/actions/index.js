@@ -23,3 +23,16 @@ export function getDogDetail(id) {
     }
   };
 }
+export let createDogs = (payload) => {
+  return async (dispatch) => {
+    try {
+      let newDogs = await axios.post(`${URL}/dogs`, payload);
+      return dispatch({
+        type: "CREATE_DOG",
+        payload: newDogs.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
