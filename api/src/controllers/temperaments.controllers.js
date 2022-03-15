@@ -3,7 +3,7 @@ const { Dog, Temperament } = require("../db");
 const router = Router();
 const axios = require("axios");
 
-const API = async (req, res) => {
+const tempApi = async (req, res) => {
   let URL = await axios.get(`https://api.thedogapi.com/v1/breeds/`);
   let Temps = URL.data.map((item) => item.temperament).toString();
   Temps = await Temps.split(",");
@@ -34,5 +34,5 @@ const API = async (req, res) => {
   res.status(200).send(allTemps);
 };
 
-router.get("/temperaments", API);
+router.get("/temperaments", tempApi);
 module.exports = router;

@@ -12,6 +12,7 @@ const API = async (req, res) => {
   const URL = await axios.get(
     `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`
   );
+
   try {
     const Doge = await URL.data?.map((dog) => {
       return {
@@ -28,29 +29,25 @@ const API = async (req, res) => {
         //   ? dog.weight.metric.split(" - ")[1]
         //   : "39",
         lifespan: dog.life_span,
-        temperament: dog.temperament ? dog.temperament : "Docile",
+        temperament: dog.temperament,
         image: dog.image.url,
       };
     });
     return Doge;
   } catch (error) {
-    console.log("SOS UN HIJO DE PUTO, VOS NACISTE DE UN CULO. SOS UNA MIERDA");
+    console.log("PARAGUAAAAYO");
   }
 };
-router.get("/dogs", async (req, res) => {
+
+router.get("/dogs?name=", async (req, res) => {
   let DogeApiInfo = await API();
   //esperamos la api
   //pasamos el query
   let { name } = req.query;
-  try {
-    let full = await Dog.findAll({ include: [{ model: Temperament }] });
-    if (!full.length) {
-      await Dog.bulkCreate(DogeApiInfo);
-      //pasamos toda la ruta a la base de datos
-    }
-  } catch (error) {
-    res.status(500).send({ msg: error });
-    return;
+  let full = await Dog.findAll();
+  if (!full.length) {
+    await Dog.bulkCreate(DogeApiInfo);
+    //pasamos toda la ruta a la base de datos
   }
   try {
     if (name) {
@@ -60,14 +57,13 @@ router.get("/dogs", async (req, res) => {
             [Op.iLike]: `%${name.toLowerCase()}%`,
           },
         },
-        include: [{ model: Temperament }],
       });
       DogName.length
         ? res.status(200).send(DogName)
         : res.status(404).send("Can't find dog");
     } else {
-      let full = await Dog.findAll({ include: [{ model: Temperament }] });
-      res.status(200).json(full);
+      let full = await Dog.findAll();
+      res.status(200).send(full);
       return;
     }
   } catch (error) {
@@ -118,7 +114,7 @@ const createFido = async (req, res) => {
 const DogeID = async (req, res) => {
   let { id } = req.params;
   try {
-    let doge = await Dog.findByPk(id);
+    let doge = await Dog.findByPk(id, { include: [Temperament] });
     if (doge) {
       res.send(doge);
     } else {
@@ -128,7 +124,7 @@ const DogeID = async (req, res) => {
     console.log({ msg: err });
   }
 };
-// router.get("/dogs", API);
+router.get("/dogs", API);
 router.get("/dogs/:id", DogeID);
 router.post("/dogs", createFido);
 

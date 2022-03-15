@@ -47,9 +47,9 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      temperament: {
-        type: DataTypes.STRING,
-      },
+      // temperament: {
+      //   type: DataTypes.STRING,
+      // },
       createdInDb: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
