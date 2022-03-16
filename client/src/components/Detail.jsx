@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { getDogDetail } from "../store/actions";
 
 function DogDetail({ match }) {
-  const Details = useSelector((state) => state.dogsDetail);
+  const Details = useSelector((state) => state.detail);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getDogDetail(match.params.apiId));
-  }, [dispatch, match.params.apiId]);
+    dispatch(getDogDetail(match.params.id));
+  }, [dispatch, match.params.id]);
 
   // let weightmin = Details.weight.split("-")[0];
   // let weightmax = Details.weight.split("-")[1] ? Details.weight.split(" - ")[1] : "39";
@@ -28,15 +28,26 @@ function DogDetail({ match }) {
       <h2>{Details.name}</h2>
       <img src={Details.img} alt="Pichicho" />
       <div>
-        <p alt="Con altura">Min.Height: {Details.Minheight} </p>
-        <p alt="Con altura">Max.Height:{Details.Maxheight} </p>
-        <p alt="Ta pesao el día">Min.Weight: {Details.Minweight} </p>
-        <p alt="Ta pesao el día">Max.Weight: {Details.Maxweight} </p>
+        <p alt="Con altura">Min.Height: {Details.height.split("-")[0]} Cms.</p>
+        <p alt="Con altura">
+          Max.Height:
+          {Details.height.split("-")[1]
+            ? height.split(" - ")[1]
+            : Math.round(height.split(" - ")[0] * 1.1)}{" "}
+          Cms.{" "}
+        </p>
+        <p alt="Ta pesao el día">
+          Min.Weight: {Details.weight.split("-")[0]} Kgs.
+        </p>
+        <p alt="Ta pesao el día">
+          Max.Weight:{" "}
+          {Details.weight.split("-")[1] ? weight.split(" - ")[1] : "39"} Kgs.
+        </p>
         <p alt="Comentariograciosogenérico">Lifespan: {Details.lifespan} </p>
         <p>
           Temperaments:
           {Details.temperaments?.map((t) => (
-            <span key={t.id}>{t.name}</span>
+            <span>{t.name}</span>
           ))}
         </p>
       </div>

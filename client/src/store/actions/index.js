@@ -36,3 +36,53 @@ export let createDogs = (payload) => {
     }
   };
 };
+export let sortDogsName = (sortDirection, dogs) => {
+  return sortDirection // Si es true ordena ascendentemente
+    ? dogs.sort((a, b) => {
+        if (a.name < b.name) return -1;
+        else if (a.name > b.name) return 1;
+        else return 0;
+      })
+    : dogs.sort((a, b) => {
+        if (a.name < b.name) return 1;
+        else if (a.name > b.name) return -1;
+        else return 0;
+      });
+};
+export let sortDogsWeight = (sortDirection, dogs) => {
+  return sortDirection // Si es true ordena ascendentemente
+    ? dogs.sort((a, b) => {
+        if (a.name < b.name) return -1;
+        else if (a.name > b.name) return 1;
+        else return 0;
+      })
+    : dogs.sort((a, b) => {
+        if (a.name < b.name) return 1;
+        else if (a.name > b.name) return -1;
+        else return 0;
+      });
+};
+export let sortDogsHeight = (sortDirection, dogs) => {
+  return sortDirection // Si es true ordena ascendentemente
+    ? dogs.sort((a, b) => {
+        if (a.name < b.name) return -1;
+        else if (a.name > b.name) return 1;
+        else return 0;
+      })
+    : dogs.sort((a, b) => {
+        if (a.name < b.name) return 1;
+        else if (a.name > b.name) return -1;
+        else return 0;
+      });
+};
+export function getTemps() {
+  return async function (dispatch) {
+    const response = await axios.get(URL + "temperaments");
+    try {
+      let json = response.data;
+      dispatch({ type: "GET_TEMPS", payload: json });
+    } catch (err) {
+      return console.log("éste es el error", err);
+    }
+  };
+}

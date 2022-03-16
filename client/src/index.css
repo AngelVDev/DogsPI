@@ -1,8 +1,9 @@
 #root {
-  display: block;
-  column-count: 3;
+  scroll-behavior: smooth;
 }
 body {
+  align-content: start;
+  justify-content: center;
   background-color: black;
   background-repeat: no-repeat;
   background-size: cover;
