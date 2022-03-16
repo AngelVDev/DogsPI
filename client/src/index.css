@@ -1,5 +1,6 @@
 #root {
-  display: inline-block;
+  display: block;
+  column-count: 3;
 }
 body {
   background-color: black;

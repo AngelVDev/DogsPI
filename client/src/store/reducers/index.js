@@ -19,6 +19,18 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+    case "SORT_DOGS": {
+      let { sortParam, sortDirection } = action.payload,
+        sortedDogs;
+      if (sortParam === "name")
+        sortedDogs = sortDogsName(sortDirection, [...state.dogs]);
+      if (sortParam === "weight")
+        sortedDogs = sortDogsWeight(sortDirection, [...state.dogs]);
+      return {
+        ...state,
+        dogs: sortedDogs,
+      };
+    }
     default:
       return state;
   }
