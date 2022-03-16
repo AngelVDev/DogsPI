@@ -33,7 +33,7 @@ const API = async (req, res) => {
         image: dog.image.url,
       };
     });
-    return Doge;
+    return Doge, res.send(Doge);
   } catch (error) {
     console.log("PARAGUAAAAYO");
   }
