@@ -7,17 +7,28 @@ export default function Pagination({ dogPerPage, allDogs, pagination }) {
     pageNum.push(i);
   }
   return (
-    <UL>
-      {pageNum &&
-        pageNum.map((number) => (
-          <button onClick={() => pagination(number)}>{number}</button>
-        ))}
-    </UL>
+    <NAV>
+      <UL>
+        {pageNum &&
+          pageNum.map((number) => (
+            <li>
+              <AAA onClick={() => pagination(number)}>{number}</AAA>
+            </li>
+          ))}
+      </UL>
+    </NAV>
   );
 }
-const UL = styled.nav`
-  width: 5vw;
-  height: 5vh;
-  background-color: white;
-  color: black;
+const NAV = styled.nav``;
+const UL = styled.ul`
+  display: flex;
+  list-style: none;
+`;
+const AAA = styled.a`
+  display: block;
+  font-size: 1.4rem;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid white;
+  margin: 4px;
 `;

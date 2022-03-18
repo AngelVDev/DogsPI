@@ -2,12 +2,11 @@
   scroll-behavior: smooth;
 }
 body {
-  align-content: start;
-  justify-content: center;
+  background-image: url("https://www.mutleyssnaps.co.uk/wp-content/uploads/2020/08/contemporary-pet-photography-falkirk-scotland-pet-portraits-studio-photography-1536x998.jpg");
   background-color: black;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url("https://www.mutleyssnaps.co.uk/wp-content/uploads/2020/08/contemporary-pet-photography-falkirk-scotland-pet-portraits-studio-photography-1536x998.jpg");
+  /* background-position: bottom; */
   font-family: "Josefin Sans", sans-serif, -apple-system, BlinkMacSystemFont,
     "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
     "Droid Sans", "Helvetica Neue", sans-serif;

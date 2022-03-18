@@ -2,11 +2,12 @@ import { React, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createDogs, getDogs } from "../store/actions";
+import { DetailedCard } from "./Detail";
+import { Button } from "./Landing";
 // import { Select } from "./Home";
 
 const Creator = () => {
   let dispatch = useDispatch();
-  let { temperaments } = useSelector((state) => state);
   let [error, setError] = useState({});
   let [input, setInput] = useState({
     name: "",
@@ -14,7 +15,7 @@ const Creator = () => {
     height: "",
     weight: "",
     image: "",
-    temperaments: [],
+    temperaments: "",
   });
 
   let validate = () => {
@@ -45,24 +46,19 @@ const Creator = () => {
       })
     );
   };
-  let handleCheckbox = (e) => {
-    if (e.target.checked) {
-      setInput({
-        ...input,
-        dogs: [...input.dogs, e.target.value],
-      });
-    }
-  };
+
   let handleOnSubmit = (e) => {
     e.preventDefault();
+    console.log("EVIDENCIA", e);
     dispatch(createDogs(input));
     setInput({
       name: "",
       height: "",
       weight: "",
       lifespan: "",
-      temperaments: [],
-      image: "",
+      temperaments: "",
+      image:
+        "https://www.meme-arsenal.com/memes/55390bf6056849e080242923f38bb394.jpg",
     });
     alert("¡Successful creation!");
   };
@@ -71,81 +67,85 @@ const Creator = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <DetailedCard>
       <h1>Create a breed</h1>
       <nav>
-        <Link to="/dogs">
-          <button>To home</button>
+        <Link to="/home">
+          <Button>To home</Button>
         </Link>
       </nav>
       <form onSubmit={handleOnSubmit}>
         <div>
           <div>
-            <label>Breed:</label>
-            <input
-              type="text"
-              placeholder="Breed name"
-              value={input.name}
-              name="name"
-              onChange={(e) => handleOnChange(e)}
-            />
-            {error.name && <p>{error.name}</p>}
+            <label>
+              Breed:
+              <input
+                type="text"
+                placeholder="Breed name"
+                value={input.name}
+                name="name"
+                onChange={(e) => handleOnChange(e)}
+              />
+              {error.name && <p>{error.name}</p>}
+            </label>
           </div>
           <div>
-            <label>Height:</label>
-            <input
-              type="text"
-              placeholder="Breed height"
-              value={input.height}
-              height="height"
-              onChange={(e) => handleOnChange(e)}
-            />
-            {error.height && <p className="error">{error.height}</p>}
+            <label>
+              Height:
+              <input
+                type="text"
+                placeholder="Breed height"
+                value={input.height}
+                name="height"
+                onChange={(e) => handleOnChange(e)}
+              />
+              {error.height && <p className="error">{error.height}</p>}
+            </label>
           </div>
           <div>
-            <label>Weight:</label>
-            <input
-              type="text"
-              placeholder="Breed weight"
-              value={input.weight}
-              weight="weight"
-              onChange={(e) => handleOnChange(e)}
-            />
-            {error.weight && <p>{error.weight}</p>}
+            <label>
+              Weight:
+              <input
+                type="text"
+                placeholder="Breed weight"
+                value={input.weight}
+                name="weight"
+                onChange={(e) => handleOnChange(e)}
+              />
+              {error.weight && <p>{error.weight}</p>}
+            </label>
           </div>
           <div>
-            <label>Lifespan:</label>
-            <input
-              type="text"
-              placeholder="Breed lifespan"
-              value={input.lifespan}
-              lifespan="lifespan"
-              onChange={(e) => handleOnChange(e)}
-            />
-            {error.lifespan && <p>{error.lifespan}</p>}
+            <label>
+              Lifespan:
+              <input
+                type="text"
+                placeholder="Breed lifespan"
+                value={input.lifespan}
+                name="lifespan"
+                onChange={(e) => handleOnChange(e)}
+              />
+              {error.lifespan && <p>{error.lifespan}</p>}
+            </label>
           </div>
           <div>
-            <label>Temperaments:</label>
-            <div>
-              {temperaments &&
-                temperaments.map((c) => {
-                  return (
-                    <div key={c.id}>
-                      <label>{c.name}</label>
-                      <input
-                        type="checkbox"
-                        value={c.name}
-                        onChange={(e) => handleCheckbox(e)}
-                      />
-                    </div>
-                  );
-                })}
-            </div>
+            <label>
+              Temperaments:
+              <input
+                type="text"
+                value={input.temperaments}
+                name="temperaments"
+                placeholder="Breed temperament"
+                onChange={(e) => handleOnChange(e)}
+              />
+            </label>
+          </div>
+          <div>
+            <button>CREATE</button>
           </div>
         </div>
-        <button type="submit">CREATE</button>
       </form>
-    </div>
+    </DetailedCard>
   );
 };
 

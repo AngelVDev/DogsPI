@@ -14,13 +14,15 @@ function Landing() {
 }
 export default Landing;
 const CocoJambo = styled.div`
+  display: grid;
+  place-content: center;
   border-radius: 22px;
   padding: 2em;
   margin: 10em;
   background: linear-gradient(331deg, rgba(22, 47, 51, 0.79) 0%, #3d1e1e 099%);
   box-shadow: -1px 0px 10px 5px rgba(25, 125, 125, 0.74);
 `;
-const Button = styled.div`
+export const Button = styled.div`
   background: linear-gradient(-45deg, #3f00b5, #9f69fe, #27c8b7, #3f00b5);
   background-size: 800% 400%;
   padding: 1em 2em;

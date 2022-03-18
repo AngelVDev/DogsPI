@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { getDogDetail } from "../store/actions/index";
+import { getDogQuery } from "../store/actions/index";
 
 const SearchBar = () => {
   let dispatch = useDispatch();
@@ -13,7 +13,7 @@ const SearchBar = () => {
   };
   let handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getDogDetail(name));
+    dispatch(getDogQuery(name));
   };
   return (
     <div>
@@ -29,7 +29,6 @@ const SearchBar = () => {
   );
 };
 export const INPUT = styled.input`
-  /* font-family: "Alegreya Sans SC";
   font-weight: bold;
   background-color: #ffb12e;
   color: white;

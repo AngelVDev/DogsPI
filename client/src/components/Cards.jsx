@@ -17,19 +17,13 @@ export default function Card({ name, image, temperament, weight }) {
 }
 export const CARD = styled.div`
   font-size: 1.2rem;
-  display: inline-block;
   background-color: rgba(28, 27, 27, 0.74);
   box-shadow: 0px 1px 18px 5px rgba(121, 255, 244, 0.76),
     0px 1px 5px 4px rgba(121, 255, 185, 0.85) inset;
-  width: 15vw;
-  height: 20rem;
-  padding-top: 3vh;
-  padding-left: 3vh;
-  padding-right: 3vh;
-  padding-bottom: 22vh;
-  margin-top: 40%;
+  width: 200px;
+  height: 400px;
+  margin: 40%;
   text-align: center;
-  justify: center;
   object-fit: cover;
   word-wrap: break-word;
 `;

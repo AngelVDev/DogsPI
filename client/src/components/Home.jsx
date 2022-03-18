@@ -1,31 +1,32 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getDogs } from "../store/actions";
+import { getDogs, getTemps } from "../store/actions";
+import { orderByName, orderByWeight } from "../store/actions";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import styled from "styled-components";
 import Pagination from "./Pagination";
 import CARD from "./Cards";
+
 /* <------------------------------> */
 function Home() {
+  const temperaments = useSelector((state) => state.temperament);
   const dispatch = useDispatch();
-  const allDogs = useSelector((state) => state.dogs);
+  const allDogs = useSelector((state) => state.filteredChocos);
   // const allTemps = useSelector((state) => state.dogs);
+
   //<------------PAGINATION------------------>
   const [currentPage, setCurrentPage] = useState(1);
   const [dogPerPage, setDogPerPage] = useState(8);
   const indexOfLastDog = currentPage * dogPerPage;
   const indexOfFirstDog = indexOfLastDog - dogPerPage;
   const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog);
+  const loading = useSelector((state) => state.loading);
+  const [order, setOrder] = useState("");
+
   const PAGINATION = (pageNum) => {
-    if (pageNum !== 1) {
-      setDogPerPage(9);
-      setCurrentPage(pageNum);
-    } else {
-      setDogPerPage(10);
-      setCurrentPage(pageNum);
-    }
+    setCurrentPage(pageNum);
   };
   //<------------PAGINATION------------------>
   useEffect(() => {
@@ -36,75 +37,90 @@ function Home() {
     event.preventDefault();
     dispatch(getDogs());
   }
+  let handleName = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(orderByName(e.target.value));
+    setOrder(e.target.value);
+  };
+  let handleWeight = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(orderByWeight(e.target.value));
+    setOrder(e.target.value);
+  };
   return (
-    <Divino>
+    <div>
       <Divo>
         <button>
           <Link to="/create">Create a breed</Link>
         </button>
         <button onClick={(event) => handleClick(event)}>Clear filters</button>
         <SearchBar />
-        <label>Sort by name</label>
-        <select name="Sort by" id="A-Z">
-          <option value="ASC">Asc</option>
-          <option value="DES">Desc</option>
-        </select>
-        <label>Sort by weight</label>
-        <select name="Sort by" id="weight">
-          <option value="ASC">Asc</option>
-          <option value="DES">Desc</option>
-        </select>
-        <label>Sort by height</label>
-        <select name="Sort by" id="height">
-          <option value="ASC">Asc</option>
-          <option value="DES">Desc</option>
-        </select>
-        <label htmlFor="">¿Display created breeds?</label>
-        <select name="By created" id="Created">
-          <option value="CRE">Show made-ups</option>
-          <option value="ONL">Only show made-ups</option>
-          <option value="NOT">Don't show made-ups</option>
-        </select>
-        <label htmlFor="">Show by temperament</label>
-        <select name="By temps" id="temps">
-          <option value="TEMP">placeholder </option>
-        </select>
         <Pagination
-          dogsPerPage={dogPerPage}
+          dogPerPage={dogPerPage}
           allDogs={allDogs.length}
           pagination={PAGINATION}
         />
+        <label>Sort by name</label>
+        <Select onChange={(e) => handleName(e)} id="A-Z">
+          <option value="ASC">Asc</option>
+          <option value="DES">Desc</option>
+        </Select>
+        <label>Sort by weight</label>
+        <Select onChange={(e) => handleWeight(e)} id="weight">
+          <option value="ASC">Asc</option>
+          <option value="DES">Desc</option>
+        </Select>
+        {/* <label htmlFor="">¿Display created breeds?</label>
+        <Select name="By created" id="Created">
+          <option value="CRE">Show made-ups</option>
+          <option value="ONL">Only show made-ups</option>
+          <option value="NOT">Don't show made-ups</option>
+        </Select> */}
+        <label htmlFor="">Show by temperament</label>
+        <Select name="By temps" id="temps"></Select>
       </Divo>
-      {currentDogs?.map((dogs) => {
-        return (
-          <Link to={"/dogs/" + dogs.id}>
-            <CARD
-              image={dogs.image}
-              name={dogs.name}
-              temperament={dogs.temperament}
-              weight={dogs.weight}
-              key={dogs.id}
-            />
-          </Link>
-        );
-      })}
-    </Divino>
+      <Divertido>
+        {currentDogs?.map((dogs) => {
+          return (
+            <Link to={"/dogs/" + dogs.id}>
+              <CARD
+                image={dogs.image}
+                name={dogs.name}
+                temperament={dogs.temperament}
+                weight={dogs.weight}
+                key={dogs.id}
+              />
+            </Link>
+          );
+        })}
+      </Divertido>
+    </div>
   );
 }
-export default Home;
+
 const Divo = styled.nav`
   font-size: 1.2rem;
   background-color: rgba(28, 27, 27, 0.74);
   box-shadow: 0px 1px 18px 5px rgba(121, 255, 244, 0.76),
     0px 1px 5px 4px rgba(121, 255, 185, 0.85) inset;
-  object-position: center;
-  width: 90vw;
+  width: 90%;
+  margin-left: 10%;
   height: 8em;
-  margin-left: 12%;
 `;
-const Divino = styled.div`
-  align-content: center;
-  position: relative;
-  display: block;
-  column-count: 3;
+const Divertido = styled.div`
+  display: flex;
+  grid-template-columns: 1fr;
 `;
+
+export const Select = styled.select`
+  background-color: #e26c6c;
+  color: white;
+  outline: 2px dashed #ffb12e;
+  outline-offset: 2px;
+  font-family: "Alegreya Sans SC";
+  font-weight: bold;
+`;
+
+export default Home;
